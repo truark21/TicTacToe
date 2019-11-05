@@ -2,7 +2,8 @@
 #GOALS:
 #   1.ADD REPLAYABLILITY IN
 #   2.ERROR CHECKING EX: IF SOMEONE ENTERS IN "YES" INSTEAD OF "Y" OR ENTERS IN SOMETHING OTHER THAN A NUMBER FOR A MOVE
-# 
+#   3.AN ISSUE WITH PLAYER BEING ABLE TO PLAY WHERE THE COMPUTER ALREADY WENT
+#
 
 import random
 
@@ -76,7 +77,6 @@ theWelcome()
 startGameInput = input("\n\nReady to start? Yes or No\n").upper()
 while startGameInput not in commandWordsToStart:
   startGameInput = input("\n\nReady to start? Yes or No\n").upper()
-
 else:
   starter = whoStarts(p1.value,p2.value)
   if starter == 'X':
@@ -85,16 +85,35 @@ else:
     print(p2.name+" starts!")
   startBoard(playingboard)
   while True:
-    if starter == 'X':
-      location = int(input("Where will your move be?"))-1
-      playingboard[location] = 'X'
+    if " " not in playingboard: #breaks out of loop if there is a draw
+      break
+
+    ####this is the players movement###
+    if starter == 'X': 
+      while True:
+        try: #this will catch if the user enters in a non-numeric value
+          location = int(input("Where will your move be?"))-1
+        except ValueError:
+          print("\nPlease enter in a value 1-9\n")
+          continue #keeps looping until given the correct value
+        else:
+          break #if numeric, break
+      
+      if playingboard[location] == " ":
+        playingboard[location] = 'X'
+      else:
+        print("Invalid move, try again!")
+        continue #this will restart the while loop and reask where the user wants to go
+      
       if theWinner(playingboard,p1.value):
         print(p1.name + " is the winner!")
         break
       print("\n\n")
       startBoard(playingboard)
-      starter = 'O'
-    else:
+      starter = 'O' #changes the turn back to the computer
+    
+    ####this is the computers movement####
+    else: 
       decision = computerChoice(playingboard)
       if decision == True:
         print("Computer is the winner!")
@@ -104,8 +123,5 @@ else:
         print("The computer picked")
         startBoard(playingboard)
         print("\n\n")
-      starter = 'X'
-  
-  
-  
-  #print("End Game")
+      starter = 'X' #changes the turn back to the player
+  print("End Game")
