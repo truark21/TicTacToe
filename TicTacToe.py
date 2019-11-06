@@ -1,7 +1,8 @@
 #THIS IS STILL IN THE WORKS, THERE IS AN ISSUE WITH THE COMPUTER NOT ALWAYS CHOOSING THE WINNING MOVE
 #GOALS:
 #   1.ADD REPLAYABLILITY IN
-# 
+#   2.COMPUTER DOESNT ALWAYS CHOOSE WINNING MOVE
+#
 
 import random
 
@@ -73,7 +74,7 @@ playingboard = [" "] * 9
 p1 = Player("Human",'X')
 p2 = Player("Computer",'O')
 theWelcome()
-startGameInput = input("\n\nReady to start? Yes or No\n").upper()
+startGameInput = input("\n\nReady to start? Yes or No\n").upper() #need to do error handling
 while startGameInput in commandWordsToStart:
   starter = whoStarts(p1.value,p2.value)
   if starter == 'X':
@@ -122,7 +123,4 @@ while startGameInput in commandWordsToStart:
         print("\n\n")
       starter = 'X' #changes the turn back to the player
   startGameInput = input("\nEnd Game\n\n\nPlay again? Yes or No\n").upper()
-  
-else:
-  
-
+  playingboard = [" "] * 9
