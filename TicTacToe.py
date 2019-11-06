@@ -67,15 +67,14 @@ def computerChoice(board):
     
 
 commandWordsToStart = ["Y","YES"]
+commandWordsToEnd = ["N","NO"]
 startingboard = ["1","2","3","4","5","6","7","8","9"]
 playingboard = [" "] * 9
 p1 = Player("Human",'X')
 p2 = Player("Computer",'O')
 theWelcome()
 startGameInput = input("\n\nReady to start? Yes or No\n").upper()
-while startGameInput not in commandWordsToStart:
-  startGameInput = input("\n\nReady to start? Yes or No\n").upper()
-else:
+while startGameInput in commandWordsToStart:
   starter = whoStarts(p1.value,p2.value)
   if starter == 'X':
     print(p1.name+" starts!")
@@ -122,4 +121,8 @@ else:
         startBoard(playingboard)
         print("\n\n")
       starter = 'X' #changes the turn back to the player
-  print("End Game")
+  startGameInput = input("\nEnd Game\n\n\nPlay again? Yes or No\n").upper()
+  
+else:
+  
+
